@@ -22,3 +22,18 @@ Key files
 - `src/*Page.jsx`, `src/*Form.jsx` — Pages and forms for Resources, Users, Vocab, Exams, Feedback
 
 Boluwatito Kajopelaye-Ola — solo project.
+
+## Phase 5 — Authentication & Authorization
+
+Implemented features:
+
+- OTP-based MFA: login uses email/username + password to initiate a time-limited OTP; successful verification issues a JWT.
+- JWT authentication: backend signs JWTs; `authenticate` middleware validates tokens and `/api/auth/me` returns the current user.
+- RBAC: users have a `role` (admin|teacher|student) and `authorize(...roles)` middleware enforces role checks.
+- Route protection: public read-only GETs remain accessible; POST/PUT endpoints require authentication; admin-only endpoints use `authorize('admin')`.
+- Frontend integration: `src/api.js` attaches the token; `Login`, `OtpVerify`, `Signup` implement the client flow; logout clears the token.
+- Dev conveniences: `DEV_SHOW_OTP` for local testing, Ethereal fallback for email preview, and `/api/auth/debug-smtp` for SMTP checks.
+
+Requirements status: All Phase 5 requirements have been implemented — public routes are accessible without a token, protected routes require a valid token, and role-restricted routes perform role checks.
+
+- Dev helpers: `DEV_SHOW_OTP`, Ethereal nodemailer fallback, and `/api/auth/debug-smtp` for SMTP checks.
