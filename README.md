@@ -1,16 +1,24 @@
-# React + Vite
+## Phase 4 — Frontend Integration (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React single-page application delivering full CRUD interfaces and a responsive, user-friendly UI that connects to the existing Express backend.
 
-Currently, two official plugins are available:
+Implemented features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Routing & Layout: `react-router-dom`-based routing with a top navigation and dedicated pages for Resources, Users, Vocab, Exams, and Feedback.
+- Central API: `src/api.js` provides a centralized `axios` instance used for all network calls.
+- CRUD Views: List and Form pages for each resource supporting Create, Read, Update, and Delete operations.
+- Validation: Client-side validation for required fields and common input formats with inline error display.
+- User Feedback: Transient flash messages for create/update actions (navigates back to list with a message) and immediate local flashes for deletes; all auto-dismiss after a short interval.
+- Defensive Data Handling: Normalization for backend responses (e.g., handling populated `userId` objects) to avoid rendering errors.
+- Visual Theme: Site-wide styling and a black + yellow theme implemented in `src/index.css` and `src/App.css`.
+- Responsiveness: Mobile-first CSS across the app — stacked navigation, single-column lists/cards, compact forms, and touch-friendly buttons.
+- UX Improvements: Card-based resource lists, prominent primary CTAs, consistent form layouts, and accessible touch targets on mobile.
 
-## React Compiler
+Key files
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `src/App.jsx` — Router and top-level layout
+- `src/api.js` — Axios base instance
+- `src/App.css`, `src/index.css` — Theme and responsive styles
+- `src/*Page.jsx`, `src/*Form.jsx` — Pages and forms for Resources, Users, Vocab, Exams, Feedback
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Boluwatito Kajopelaye-Ola — solo project.

@@ -2,7 +2,7 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  text-align: left;
 }
 
 .logo {
@@ -39,4 +39,487 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* App layout */
+.app-container {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 24px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  color: var(--text);
+}
+
+/* Responsive improvements */
+@media (max-width: 900px) {
+  .resource-list {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .resource-card {
+    padding: 14px;
+  }
+  .hero h2 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .brand {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Make nav occupy full-width and center its text inside the nav "cards" */
+  .app-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .app-nav a {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--muted);
+    gap: 8px;
+  }
+  .app-nav a:hover {
+    transform: none;
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  /* Ensure panels and main containers scale fluidly */
+  .app-container,
+  .panel {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    box-sizing: border-box;
+  }
+
+  /* Stack resource cards and make actions full-width */
+  .resource-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .resource-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .resource-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    margin-top: 10px;
+  }
+  .resource-actions a,
+  .resource-actions button {
+    width: 100%;
+    padding: 10px 12px;
+  }
+
+  /* Make list items stack vertically on small screens and keep actions tappable */
+  .list-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  .list-item > div:last-child {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .list-item button {
+    min-width: 120px;
+  }
+
+  /* Forms and buttons should fit narrow screens */
+  .form-row {
+    padding: 8px 0;
+  }
+  .panel form {
+    padding: 8px 0;
+  }
+  .btn-primary,
+  .btn-danger {
+    width: 100%;
+    display: block;
+  }
+  .btn {
+    width: 100%;
+  }
+
+  /* Tighten hero for small screens */
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand-text h1 {
+    font-size: 0.95rem;
+  }
+  .panel {
+    padding: 12px;
+  }
+  .resource-card h4 {
+    font-size: 0.98rem;
+  }
+}
+
+/* Header / Brand */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), #ffecb3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  font-weight: 800;
+  font-size: 1rem;
+}
+.brand-text h1 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.brand-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.flag-wrap {
+  margin-left: 6px;
+}
+
+/* Remove default list bullets for quick links and panels */
+.panel ul {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+.panel ul li {
+  margin: 8px 0;
+}
+
+/* Nav spacing fallback in case gap isn't applied */
+.app-nav a {
+  margin-left: 8px;
+}
+
+/* Ensure header stands out and does not overlap content */
+.app-header {
+  position: relative;
+  z-index: 10;
+  padding: 6px 12px;
+}
+
+/* Make main area slightly separated */
+main {
+  margin-top: 6px;
+}
+
+/* Improve small-screen layout */
+@media (max-width: 720px) {
+  .app-container {
+    padding: 12px;
+  }
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .features {
+    grid-template-columns: 1fr 1fr;
+  }
+  .app-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .app-nav a {
+    margin-left: 0;
+  }
+}
+.app-nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.app-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+.app-nav a:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.hero {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 20px;
+}
+.hero h2 {
+  margin: 0 0 6px 0;
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+.hero .muted {
+  margin: 0;
+  color: var(--muted);
+}
+
+.panel {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--card-shadow);
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+/* small France flag marker */
+.fr-flag {
+  width: 36px;
+  height: 20px;
+  border-radius: 4px;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(
+    90deg,
+    #0055a4 0 33.33%,
+    #ffffff 33.33% 66.66%,
+    #ef4135 66.66% 100%
+  );
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(16, 24, 40, 0.04);
+}
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.form-row {
+  margin-bottom: 12px;
+  text-align: left;
+  padding: 6px 4px;
+}
+.form-row label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.form-row input,
+.form-row textarea,
+.form-row select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  box-sizing: border-box;
+}
+.form-row input:focus,
+.form-row textarea:focus,
+.form-row select:focus {
+  outline: none;
+  border-color: rgba(255, 212, 0, 0.9);
+  box-shadow: 0 6px 18px rgba(255, 212, 0, 0.06);
+}
+
+/* Ensure forms inside panels have breathing room from panel edges */
+.panel form {
+  padding: 6px 0;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #0a0a0a;
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(255, 212, 0, 0.12);
+}
+.btn-danger {
+  background: var(--france-red);
+  color: #fff;
+}
+.muted {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Home cards */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.feature {
+  padding: 14px;
+  border-radius: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+.feature h4 {
+  margin: 0 0 6px 0;
+  color: var(--accent);
+}
+
+/* Resources list styling */
+.resource-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.resource-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.resource-card h4 {
+  margin: 0 0 8px 0;
+  color: var(--accent);
+  font-size: 1rem;
+}
+.resource-meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+.resource-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.resource-actions a,
+.resource-actions button {
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.resource-actions a {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+}
+.resource-actions .open {
+  background: var(--accent);
+  color: #0b0b0b;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(255, 212, 0, 0.18);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.resource-actions .open:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(255, 212, 0, 0.22);
+}
+.resource-actions .edit {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--accent);
+}
+.resource-actions .delete {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--france-red);
+}
+
+/* Mobile-specific smaller buttons */
+@media (max-width: 600px) {
+  .btn {
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+
+  .resource-actions a,
+  .resource-actions button,
+  .list-item button,
+  .app-nav a {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+
+  /* Slightly tighter open button so primary CTAs remain prominent but compact */
+  .resource-actions .open {
+    padding: 8px 10px;
+    font-size: 1rem;
+  }
 }
