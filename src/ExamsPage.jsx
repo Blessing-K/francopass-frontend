@@ -4,6 +4,7 @@ import { api } from "./api";
 
 export default function ExamsPage() {
   const [items, setItems] = useState([]);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -29,6 +30,15 @@ export default function ExamsPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    api
+      .get("/api/auth/me")
+      .then((r) => setUser(r.data))
+      .catch(() => setUser(null));
+  }, []);
+
   async function del(id) {
     if (!confirm("Delete exam?")) return;
     try {
@@ -51,14 +61,16 @@ export default function ExamsPage() {
         </div>
       )}
       <h2>Exams</h2>
-      <p>
-        <button
-          className="btn btn-primary"
-          onClick={() => navigate("/exams/new")}
-        >
-          + Add Exam
-        </button>
-      </p>
+      {user && user.role === "admin" && (
+        <p>
+          <button
+            className="btn btn-primary"
+            onClick={() => navigate("/exams/new")}
+          >
+            + Add Exam
+          </button>
+        </p>
+      )}
       {items.length === 0 ? (
         <p className="muted">No exams defined.</p>
       ) : (
@@ -71,21 +83,23 @@ export default function ExamsPage() {
                 {e.timer || "—"}
               </div>
             </div>
-            <div>
-              <button
-                className="btn"
-                onClick={() => navigate(`/exams/${e._id}/edit`)}
-              >
-                Edit
-              </button>
-              <button
-                className="btn btn-danger"
-                style={{ marginLeft: 8 }}
-                onClick={() => del(e._id)}
-              >
-                Delete
-              </button>
-            </div>
+            {user && user.role === "admin" && (
+              <div>
+                <button
+                  className="btn"
+                  onClick={() => navigate(`/exams/${e._id}/edit`)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-danger"
+                  style={{ marginLeft: 8 }}
+                  onClick={() => del(e._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         ))
       )}

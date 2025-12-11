@@ -4,6 +4,7 @@ import { api } from "./api";
 
 export default function FeedbackPage() {
   const [items, setItems] = useState([]);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -28,6 +29,15 @@ export default function FeedbackPage() {
 
   useEffect(() => {
     load();
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    api
+      .get("/api/auth/me")
+      .then((r) => setUser(r.data))
+      .catch(() => setUser(null));
   }, []);
   useEffect(() => {
     if (initialFlash) navigate(location.pathname, { replace: true, state: {} });
@@ -66,9 +76,11 @@ export default function FeedbackPage() {
           alignItems: "center",
         }}
       >
-        <Link to="/feedback/new" className="btn btn-primary">
-          + Add
-        </Link>
+        {user && user.role === "admin" && (
+          <Link to="/feedback/new" className="btn btn-primary">
+            + Add
+          </Link>
+        )}
         <button className="btn" onClick={load}>
           Reload
         </button>
@@ -103,21 +115,23 @@ export default function FeedbackPage() {
                 User: {userDisplay} • Rating: {f.rating || "—"}
               </div>
             </div>
-            <div>
-              <button
-                className="btn"
-                onClick={() => navigate(`/feedback/${f._id}/edit`)}
-              >
-                Edit
-              </button>
-              <button
-                className="btn btn-danger"
-                style={{ marginLeft: 8 }}
-                onClick={() => del(f._id)}
-              >
-                Delete
-              </button>
-            </div>
+            {user && user.role === "admin" && (
+              <div>
+                <button
+                  className="btn"
+                  onClick={() => navigate(`/feedback/${f._id}/edit`)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-danger"
+                  style={{ marginLeft: 8 }}
+                  onClick={() => del(f._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         );
       })}

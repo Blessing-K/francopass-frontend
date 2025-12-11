@@ -4,6 +4,7 @@ import { api } from "./api";
 
 export default function ResourcesPage() {
   const [resources, setResources] = useState([]);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -39,6 +40,15 @@ export default function ResourcesPage() {
     load();
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    api
+      .get("/api/auth/me")
+      .then((r) => setUser(r.data))
+      .catch(() => setUser(null));
+  }, []);
+
   async function handleDelete(id) {
     if (!confirm("Delete this resource?")) return;
     try {
@@ -69,11 +79,13 @@ export default function ResourcesPage() {
         }}
       >
         <h2 style={{ margin: 0 }}>Resources</h2>
-        <div>
-          <Link to="/resources/new" className="btn btn-primary">
-            + Add Resource
-          </Link>
-        </div>
+        {user && user.role === "admin" && (
+          <div>
+            <Link to="/resources/new" className="btn btn-primary">
+              + Add Resource
+            </Link>
+          </div>
+        )}
       </div>
 
       {resources.length === 0 ? (
@@ -101,15 +113,22 @@ export default function ResourcesPage() {
                 >
                   Open
                 </a>
-                <button
-                  className="edit"
-                  onClick={() => navigate(`/resources/${r._id}/edit`)}
-                >
-                  Edit
-                </button>
-                <button className="delete" onClick={() => handleDelete(r._id)}>
-                  Delete
-                </button>
+                {user && user.role === "admin" && (
+                  <>
+                    <button
+                      className="edit"
+                      onClick={() => navigate(`/resources/${r._id}/edit`)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="delete"
+                      onClick={() => handleDelete(r._id)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))}

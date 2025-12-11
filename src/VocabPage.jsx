@@ -4,6 +4,7 @@ import { api } from "./api";
 
 export default function VocabPage() {
   const [items, setItems] = useState([]);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -27,6 +28,15 @@ export default function VocabPage() {
       .then((r) => setItems(r.data))
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    api
+      .get("/api/auth/me")
+      .then((r) => setUser(r.data))
+      .catch(() => setUser(null));
   }, []);
 
   async function del(id) {
@@ -68,19 +78,25 @@ export default function VocabPage() {
               </div>
             </div>
             <div>
-              <button
-                className="btn"
-                onClick={() => navigate(`/vocab/${v._id}/edit`)}
-              >
-                Edit
-              </button>
-              <button
-                className="btn btn-danger"
-                style={{ marginLeft: 8 }}
-                onClick={() => del(v._id)}
-              >
-                Delete
-              </button>
+              {user &&
+              (user.role === "admin" ||
+                String(user.id) === String(v.createdBy)) ? (
+                <>
+                  <button
+                    className="btn"
+                    onClick={() => navigate(`/vocab/${v._id}/edit`)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    style={{ marginLeft: 8 }}
+                    onClick={() => del(v._id)}
+                  >
+                    Delete
+                  </button>
+                </>
+              ) : null}
             </div>
           </div>
         ))
