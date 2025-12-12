@@ -27,13 +27,20 @@ Boluwatito Kajopelaye-Ola — solo project.
 
 Implemented features:
 
-- OTP-based MFA: login uses email/username + password to initiate a time-limited OTP; successful verification issues a JWT.
+- OTP-based MFA: login uses email/username + password to initiate a time-limited OTP sent via email; successful verification issues a JWT.
 - JWT authentication: backend signs JWTs; `authenticate` middleware validates tokens and `/api/auth/me` returns the current user.
 - RBAC: users have a `role` (admin|teacher|student) and `authorize(...roles)` middleware enforces role checks.
 - Route protection: public read-only GETs remain accessible; POST/PUT endpoints require authentication; admin-only endpoints use `authorize('admin')`.
-- Frontend integration: `src/api.js` attaches the token; `Login`, `OtpVerify`, `Signup` implement the client flow; logout clears the token.
-- Dev conveniences: `DEV_SHOW_OTP` for local testing, Ethereal fallback for email preview, and `/api/auth/debug-smtp` for SMTP checks.
+- Ownership-based permissions: users can edit/delete vocabulary items they created; resources, exams, and feedback are admin-only.
+- Frontend integration: `src/api.js` attaches the JWT token as Bearer auth; `Login`, `OtpVerify`, `Signup` implement the client flow; logout clears the token.
+- Conditional UI: action buttons (edit/delete) are shown only to users with appropriate permissions (role + ownership checks).
+- Gmail API integration: emails sent via Gmail API (HTTP-based, no SMTP ports) — works on Render free tier and platforms that block SMTP.
+- Dev conveniences: `DEV_SHOW_OTP` for local testing, Ethereal fallback for email preview, and `/api/auth/debug-smtp` for email checks.
 
-Requirements status: All Phase 5 requirements have been implemented — public routes are accessible without a token, protected routes require a valid token, and role-restricted routes perform role checks.
+Requirements status: All Phase 5 requirements have been implemented — public routes are accessible without a token, protected routes require a valid token, and role-restricted routes perform role checks with ownership validation where applicable.
 
-- Dev helpers: `DEV_SHOW_OTP`, Ethereal nodemailer fallback, and `/api/auth/debug-smtp` for SMTP checks.
+### Deployment
+
+- **Backend**: Deployed on Render with MongoDB Atlas and Gmail API for email delivery
+- **Frontend**: Deployed on Vercel with `VITE_API_BASE_URL` pointing to backend
+- **Environment variables**: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`, `SMTP_USER`, `JWT_SECRET`, `MONGO_URI`
